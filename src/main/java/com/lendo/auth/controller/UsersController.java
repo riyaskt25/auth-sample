@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lendo.auth.controller.response.ResponseWrapper;
+import com.lendo.auth.ext.rest.pojo.Comments;
+import com.lendo.auth.ext.rest.pojo.Posts;
 import com.lendo.auth.ext.rest.pojo.RestUser;
 import com.lendo.auth.service.UserService;
 
@@ -22,11 +24,27 @@ public class UsersController {
 	private UserService userService;
 
 	@GetMapping("/users")
-	public ResponseWrapper register(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ResponseWrapper getUsers(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String token = request.getHeader("Authorization");
 		LOGGER.info("Authorization header value= {}", token);
 		RestUser[] users = userService.getUsers(token);
 		return ResponseWrapper.builder().result(users).build();
+	}
+	
+	@GetMapping("/posts")
+	public ResponseWrapper getPosts(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String token = request.getHeader("Authorization");
+		LOGGER.info("Authorization header value= {}", token);
+		Posts[] posts = userService.getPosts(token);
+		return ResponseWrapper.builder().result(posts).build();
+	}
+	
+	@GetMapping("/comments")
+	public ResponseWrapper getComments(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String token = request.getHeader("Authorization");
+		LOGGER.info("Authorization header value= {}", token);
+		Comments[] comments = userService.getComments(token);
+		return ResponseWrapper.builder().result(comments).build();
 	}
 
 }
