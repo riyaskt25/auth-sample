@@ -1,9 +1,12 @@
-package com.lendo.auth.controller;
+package com.lendo.auth.controller.client;
+
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lendo.auth.controller.response.ResponseWrapper;
@@ -30,7 +33,7 @@ public class UsersController {
 		RestUser[] users = userService.getUsers(token);
 		return ResponseWrapper.builder().result(users).build();
 	}
-	
+
 	@GetMapping("/posts")
 	public ResponseWrapper getPosts(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String token = request.getHeader("Authorization");
@@ -38,13 +41,22 @@ public class UsersController {
 		Posts[] posts = userService.getPosts(token);
 		return ResponseWrapper.builder().result(posts).build();
 	}
-	
+
 	@GetMapping("/comments")
 	public ResponseWrapper getComments(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String token = request.getHeader("Authorization");
 		LOGGER.info("Authorization header value= {}", token);
 		Comments[] comments = userService.getComments(token);
 		return ResponseWrapper.builder().result(comments).build();
+	}
+
+	@GetMapping("/posts/{userId}")
+	public ResponseWrapper getPosts(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String userId) throws Exception {
+		String token = request.getHeader("Authorization");
+		LOGGER.info("Authorization header value= {}", token);
+		List<Posts> posts= userService.getUserPosts(userId);
+		return ResponseWrapper.builder().result(posts).build();
 	}
 
 }

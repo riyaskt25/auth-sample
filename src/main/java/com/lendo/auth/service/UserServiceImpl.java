@@ -1,5 +1,8 @@
 package com.lendo.auth.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -47,5 +50,14 @@ public class UserServiceImpl implements UserService {
 
 		Comments[] comments = restTemplate.getForObject("https://gorest.co.in/public/v2/comments", Comments[].class);
 		return comments;
+	}
+
+	public List<Posts> getUserPosts(String userId) {
+		Posts[] posts = restTemplate.getForObject("https://gorest.co.in/public/v2/posts", Posts[].class);
+
+		List<Posts> userPosts = java.util.Arrays.stream(posts).filter(post -> post.getUser_id().equals(userId))
+				.collect(Collectors.toList());
+
+		return userPosts;
 	}
 }

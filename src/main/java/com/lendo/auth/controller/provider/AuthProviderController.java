@@ -1,4 +1,4 @@
-package com.lendo.auth.controller;
+package com.lendo.auth.controller.provider;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
