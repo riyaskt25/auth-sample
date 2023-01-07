@@ -8,11 +8,11 @@ import com.lendo.auth.ext.rest.pojo.RestUser;
 
 public interface UserService {
 
-	RestUser[] getUsers(String token);
+	RestUser[] getUsers();
 
-	Posts[] getPosts(String token);
+	Posts[] getPosts();
 
-	Comments[] getComments(String token);
-	
+	Comments[] getComments();
+
 	List<Posts> getUserPosts(String userId);
 }

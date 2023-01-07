@@ -7,6 +7,4 @@ public interface AuthenticationService {
 
 	AuthResult authenticate(UserDetails userDetails);
 
-	boolean hasRole(String jwtString, String roleName);
-
 }

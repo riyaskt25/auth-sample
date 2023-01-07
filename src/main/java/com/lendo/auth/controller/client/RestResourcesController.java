@@ -19,43 +19,35 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-public class UsersController {
+public class RestResourcesController {
 
-	private static final Logger LOGGER = LogManager.getLogger(UsersController.class);
+	private static final Logger LOGGER = LogManager.getLogger(RestResourcesController.class);
 
 	@Autowired
 	private UserService userService;
 
 	@GetMapping("/users")
 	public ResponseWrapper getUsers(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String token = request.getHeader("Authorization");
-		LOGGER.info("Authorization header value= {}", token);
-		RestUser[] users = userService.getUsers(token);
+		RestUser[] users = userService.getUsers();
 		return ResponseWrapper.builder().result(users).build();
 	}
 
 	@GetMapping("/posts")
 	public ResponseWrapper getPosts(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String token = request.getHeader("Authorization");
-		LOGGER.info("Authorization header value= {}", token);
-		Posts[] posts = userService.getPosts(token);
+		Posts[] posts = userService.getPosts();
 		return ResponseWrapper.builder().result(posts).build();
 	}
 
 	@GetMapping("/comments")
 	public ResponseWrapper getComments(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String token = request.getHeader("Authorization");
-		LOGGER.info("Authorization header value= {}", token);
-		Comments[] comments = userService.getComments(token);
+		Comments[] comments = userService.getComments();
 		return ResponseWrapper.builder().result(comments).build();
 	}
 
 	@GetMapping("/posts/{userId}")
 	public ResponseWrapper getPosts(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String userId) throws Exception {
-		String token = request.getHeader("Authorization");
-		LOGGER.info("Authorization header value= {}", token);
-		List<Posts> posts= userService.getUserPosts(userId);
+		List<Posts> posts = userService.getUserPosts(userId);
 		return ResponseWrapper.builder().result(posts).build();
 	}
 
